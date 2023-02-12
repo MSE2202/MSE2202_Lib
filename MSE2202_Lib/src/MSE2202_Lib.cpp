@@ -124,7 +124,7 @@ void Motion::servoBegin(char cServoID[2], int iServoPin1)
 	
 	char c_servoID; 
 	
-	if((cServoID[0] == 'M') || (cServoID[0] == 'M'))
+	if((cServoID[0] == 'S') || (cServoID[0] == 's'))
 	{
 		if((cServoID[1] >= '1') &&  (cServoID[1] <= '8'))
 		{
@@ -136,16 +136,45 @@ void Motion::servoBegin(char cServoID[2], int iServoPin1)
 		}
 		//setup PWM for motors
 		ucLEDcServoChannels[(c_servoID - 1)] = Get_LEDcChannel();
-		ledcAttachPin(iServoPin1, ucLEDcServoChannels[0]); // assign Motors pins to channels
+		ledcAttachPin(iServoPin1, ucLEDcServoChannels[(c_servoID - 1)]); // assign Motors pins to channels
 		 // Initialize channels 
 	  // channels 0-15, resolution 1-16 bits, freq limits depend on resolution
 	  // ledcSetup(uint8_t channel, uint32_t freq, uint8_t resolution_bits);
-		ledcSetup(ucLEDcServoChannels[(c_servoID * 2) - 2],  50,14);// channel 1, 50 Hz, 14-bit width
+		ledcSetup(ucLEDcServoChannels[c_servoID  - 1],  50,14);// channel 1, 50 Hz, 14-bit width
 	}
 	else
 	{
 		Serial.printf("Incorrect ID Designator number %s\n", cServoID);
 	}
+}
+
+void Motion::ToPosition(char cID[2], unsigned int uiServoPosition)
+{
+	char c_ID; 
+	
+	switch(cID[0])
+	{
+		
+		case 's':
+		case 'S':
+		{
+			if((cID[1] >= '1') &&  (cID[1] <= '8'))
+			{
+				c_ID = cID[1] - 0x30;
+			}
+			else 
+			{
+				Serial.printf("Incorrect ID Designator number %s\n", cID);
+			}
+			ledcWrite(ucLEDcServoChannels[c_ID - 1],uiServoPosition);
+			break;
+		}
+		default:
+		{
+			Serial.printf("Incorrect ID Designator %s\n", cID);
+		}
+	}
+	
 }
 
 void Motion::Forward(char cID[2], unsigned char ucSpeed)

@@ -37,7 +37,7 @@ public:
 */		
 		void motorBegin(char cMotorID[2], int iMotorPin1, int iMotorPin2);
 /*
-  NOT TESTED - Set up one servo to be controlled.  cServoID = S1 to S8 ( limited number of servos and will be lessened if motors or drives are used. Since there is only 8 channels total
+  Set up one servo to be controlled.  cServoID = S1 to S8 ( limited number of servos and will be lessened if motors or drives are used. Since there is only 8 channels total
  and servoBegin uses 1 channel each.
 */			
 		void servoBegin(char cServoID[2], int iServoPin1);
@@ -77,6 +77,11 @@ public:
   Will run the Stop motor(s) 55), Can be Drive,  Motor or Servo ID = M1 to M4 or D1, D2
 */		
 		void Stop(char cID[2]);
+/*
+  Will run the Servo(s) to the raw position in ucServoPosition ( 0 to 16384), ID can only be servo ID = S1 to S8
+*/			
+		void ToPosition(char cID[2], unsigned int uiServoPosition);
+	
 		void end();
 
 	  
