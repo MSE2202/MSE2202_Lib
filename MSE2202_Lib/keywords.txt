@@ -24,6 +24,8 @@ Left	      KEYWORD2
 Right	      KEYWORD2
 Stop	      KEYWORD2
 ToPosition   KEYWORD2
+Get_IR_Data  KEYWORD2
+Available KEYWORD2
 
 
 #######################################

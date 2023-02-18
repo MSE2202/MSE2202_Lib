@@ -762,3 +762,48 @@ void Encoders::clearEncoder()
  {
 	
  }
+
+
+
+
+
+IR::IR()
+{
+	b_IR_ReceivedData = 0;  
+}
+
+
+void IR::Begin(int iIR_Pin)
+{
+    Serial2.begin(2400, SERIAL_8N1, iIR_Pin); 
+
+}
+
+boolean IR::Available()
+{
+	if (Serial2.available() > 0)
+    { 
+	  b_IR_ReceivedData = Serial2.read();
+      return(1);          // read the incoming byte
+
+    }
+	else
+	{
+		b_IR_ReceivedData = 0xEE;
+		return(0x00);
+		
+	}
+	
+}
+
+char IR::Get_IR_Data()
+{
+	
+   return(b_IR_ReceivedData);
+   
+}
+
+void IR::end()
+ {
+	
+ }

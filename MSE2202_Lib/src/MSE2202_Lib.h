@@ -41,6 +41,8 @@ public:
  and servoBegin uses 1 channel each.
 */			
 		void servoBegin(char cServoID[2], int iServoPin1);
+	
+		
 /*
   Will run the motor(s) "Forward" at speed in ucSpeed ( 0 to 255),Can be both Drive or Motor ID = M1 to M4 or D1, D2
 */			
@@ -169,6 +171,33 @@ private:
 	
 		
 		
+};
+
+class IR
+{
+public:
+	    IR();
+	    ~IR(){ end(); }
+/*
+  Set up IR Detector . IR uses serial port to received encoded data from beacon, Beacon continuously transmits 57 (ASCII 9) every 10 mS for one second then transmits 66 (ASCII B)
+  every 10 mS for one second then repeats/ 
+*/			
+		void Begin(int iIR_Pin);	
+/*
+  Will return the character IR Detector saw since last time Get_IR_Data was called. If no data was seen since last call will return 0 
+  
+*/		
+		char Get_IR_Data();
+/*
+  Indicate that IR saw data 
+*/		
+		boolean Available();
+		
+		void end();	
+		
+private:
+
+    char b_IR_ReceivedData;
 };
 
 #endif /* MSE2202_LIB_H */
